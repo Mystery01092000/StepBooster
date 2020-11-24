@@ -1,5 +1,6 @@
 package com.pranav.stepbooster;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -56,5 +57,26 @@ public class Database extends SQLiteOpenHelper
                 .query(DB_NAME, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
     }
 
+    public void insertNewDay(long date, int steps) {
+        getWritableDatabase().beginTransaction();
+        try {
+            Cursor c = getReadableDatabase().query(DB_NAME, new String[]{"date"}, "date = ?",
+                    new String[]{String.valueOf(date)}, null, null, null);
+            if (c.getCount() == 0 && steps >= 0) {
+
+                addToLastEntry(steps);
+
+                ContentValues values = new ContentValues();
+                values.put("date", date);
+
+                values.put("steps", -steps);
+                getWritableDatabase().insert(DB_NAME, null, values);
+            }
+            c.close();
+            getWritableDatabase().setTransactionSuccessful();
+        } finally {
+            getWritableDatabase().endTransaction();
+        }
+    }
 
 }
