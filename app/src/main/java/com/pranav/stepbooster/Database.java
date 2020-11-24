@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Pair;
 
 import com.pranav.stepbooster.Util.Util;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Database extends SQLiteOpenHelper
@@ -158,5 +161,19 @@ public class Database extends SQLiteOpenHelper
     public int getDays() {
         int re = this.getDaysWithoutToday() + 1;
         return re;
+    }
+
+    public void saveCurrentSteps(int steps) {
+        ContentValues values = new ContentValues();
+        values.put("steps", steps);
+        if (getWritableDatabase().update(DB_NAME, values, "date = -1", null) == 0) {
+            values.put("date", -1);
+            getWritableDatabase().insert(DB_NAME, null, values);
+        }
+    }
+
+    public int getCurrentSteps() {
+        int re = getSteps(-1);
+        return re == Integer.MIN_VALUE ? 0 : re;
     }
 }

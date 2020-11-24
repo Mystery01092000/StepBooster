@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.pranav.stepbooster.Activity_Main;
 import com.pranav.stepbooster.Database;
 import com.pranav.stepbooster.R;
-import com.pranav.stepbooster.SensorListener;
 import com.pranav.stepbooster.Util.Util;
 
 import org.eazegraph.lib.charts.BarChart;

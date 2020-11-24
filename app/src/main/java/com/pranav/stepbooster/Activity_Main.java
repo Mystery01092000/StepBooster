@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import androidx.fragment.app.FragmentActivity;
 
 import com.pranav.stepbooster.ui.Fragment_Overview;
+import com.pranav.stepbooster.ui.Fragment_Settings;
 
 public class Activity_Main extends FragmentActivity {
 
