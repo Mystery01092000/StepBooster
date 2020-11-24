@@ -1,6 +1,7 @@
 package com.pranav.stepbooster;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -47,5 +48,13 @@ public class Database extends SQLiteOpenHelper
             db.execSQL("ALTER TABLE " + DB_NAME + "2 RENAME TO " + DB_NAME + "");
         }
     }
+
+    public Cursor query(final String[] columns, final String selection,
+                        final String[] selectionArgs, final String groupBy, final String having,
+                        final String orderBy, final String limit) {
+        return getReadableDatabase()
+                .query(DB_NAME, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+    }
+
 
 }
