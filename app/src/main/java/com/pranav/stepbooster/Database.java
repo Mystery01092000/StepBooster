@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.pranav.stepbooster.Util.Util;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Database extends SQLiteOpenHelper
@@ -111,6 +112,34 @@ public class Database extends SQLiteOpenHelper
         int re;
         if (c.getCount() == 0) re = Integer.MIN_VALUE;
         else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+    public List<Pair<Long, Integer>> getLastEntries(int num) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"date", "steps"}, "date > 0", null, null, null,
+                        "date DESC", String.valueOf(num));
+        int max = c.getCount();
+        List<Pair<Long, Integer>> result = new ArrayList<>(max);
+        if (c.moveToFirst()) {
+            do {
+                result.add(new Pair<>(c.getLong(0), c.getInt(1)));
+            } while (c.moveToNext());
+        }
+        return result;
+    }
+
+    public int getSteps(final long start, final long end) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"SUM(steps)"}, "date >= ? AND date <= ?",
+                        new String[]{String.valueOf(start), String.valueOf(end)}, null, null, null);
+        int re;
+        if (c.getCount() == 0) {
+            re = 0;
+        } else {
+            c.moveToFirst();
+            re = c.getInt(0);
+        }
         c.close();
         return re;
     }
