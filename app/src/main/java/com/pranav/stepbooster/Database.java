@@ -144,4 +144,20 @@ public class Database extends SQLiteOpenHelper
         return re;
     }
 
+    public int getDaysWithoutToday() {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"COUNT(*)"}, "steps > ? AND date < ? AND date > 0",
+                        new String[]{String.valueOf(0), String.valueOf(Util.getToday())}, null,
+                        null, null);
+        c.moveToFirst();
+        int re = c.getInt(0);
+        c.close();
+        return re < 0 ? 0 : re;
+    }
+
+    public int getDays() {
+        int re = this.getDaysWithoutToday() + 1;
+        return re;
+    }
+
 }
