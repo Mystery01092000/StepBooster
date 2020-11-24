@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.pranav.stepbooster.Util.Util;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Database extends SQLiteOpenHelper
@@ -77,6 +79,19 @@ public class Database extends SQLiteOpenHelper
         } finally {
             getWritableDatabase().endTransaction();
         }
+    }
+    public void addToLastEntry(int steps) {
+        getWritableDatabase().execSQL("UPDATE " + DB_NAME + " SET steps = steps + " + steps +
+                " WHERE date = (SELECT MAX(date) FROM " + DB_NAME + ")");
+    }
+    public int getTotalWithoutToday() {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"SUM(steps)"}, "steps > 0 AND date > 0 AND date < ?",
+                        new String[]{String.valueOf(Util.getToday())}, null, null, null);
+        c.moveToFirst();
+        int re = c.getInt(0);
+        c.close();
+        return re;
     }
 
 }
