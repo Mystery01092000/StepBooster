@@ -1,0 +1,15 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/settings"/>
+
+    <item
+        android:id="@+id/action_split_count"
+        android:orderInCategory="100"
+        android:title="@string/split_count"
+        app:showAsAction="never" />
+
+</menu>
