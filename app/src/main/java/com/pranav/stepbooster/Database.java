@@ -24,5 +24,11 @@ public class Database extends SQLiteOpenHelper
         openCounter.incrementAndGet();
         return instance;
     }
+    @Override
+    public void close() {
+        if (openCounter.decrementAndGet() == 0) {
+            super.close();
+        }
+    }
 
 }
