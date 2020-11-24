@@ -159,5 +159,4 @@ public class Database extends SQLiteOpenHelper
         int re = this.getDaysWithoutToday() + 1;
         return re;
     }
-
 }
