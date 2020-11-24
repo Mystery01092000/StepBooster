@@ -1,6 +1,7 @@
 package com.pranav.stepbooster;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,6 +29,22 @@ public class Database extends SQLiteOpenHelper
     public void close() {
         if (openCounter.decrementAndGet() == 0) {
             super.close();
+        }
+    }
+    @Override
+    public void onCreate(final SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + DB_NAME + " (date INTEGER, steps INTEGER)");
+    }
+
+    @Override
+    public void onUpgrade(final SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion == 1) {
+            // drop PRIMARY KEY constraint
+            db.execSQL("CREATE TABLE " + DB_NAME + "2 (date INTEGER, steps INTEGER)");
+            db.execSQL("INSERT INTO " + DB_NAME + "2 (date, steps) SELECT date, steps FROM " +
+                    DB_NAME);
+            db.execSQL("DROP TABLE " + DB_NAME);
+            db.execSQL("ALTER TABLE " + DB_NAME + "2 RENAME TO " + DB_NAME + "");
         }
     }
 
