@@ -94,4 +94,14 @@ public class Database extends SQLiteOpenHelper
         return re;
     }
 
+    public Pair<Date, Integer> getRecordData() {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"date, steps"}, "date > 0", null, null, null,
+                        "steps DESC", "1");
+        c.moveToFirst();
+        Pair<Date, Integer> p = new Pair<Date, Integer>(new Date(c.getLong(0)), c.getInt(1));
+        c.close();
+        return p;
+    }
+
 }
