@@ -104,4 +104,15 @@ public class Database extends SQLiteOpenHelper
         return p;
     }
 
+    public int getSteps(final long date) {
+        Cursor c = getReadableDatabase().query(DB_NAME, new String[]{"steps"}, "date = ?",
+                new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
 }
