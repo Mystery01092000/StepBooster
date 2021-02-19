@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:eaze="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,14 +7,13 @@
     tools:context=".Activity_Main">
 
     <org.eazegraph.lib.charts.PieChart
-        xmlns:eaze="http://schemas.android.com/apk/res-auto"
         android:id="@+id/graph"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        eaze:egLegendHeight="0dp"
+        eaze:egHighlightStrength="1"
         eaze:egInnerPadding="75"
-        eaze:egHighlightStrength="1"/>
+        eaze:egLegendHeight="0dp" />
 
     <TextView
         android:id="@+id/steps"

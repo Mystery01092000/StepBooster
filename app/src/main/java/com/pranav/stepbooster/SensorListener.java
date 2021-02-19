@@ -12,7 +12,6 @@ import android.os.IBinder;
 
 public class SensorListener extends Service implements SensorEventListener {
 
-    public final static int NOTIFICATION_ID = 1;
     private final static long MICROSECONDS_IN_ONE_MINUTE = 60000000;
     private final static long SAVE_OFFSET_TIME = AlarmManager.INTERVAL_HOUR;
     private final static int SAVE_OFFSET_STEPS = 500;
